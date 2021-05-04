@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { App } from './app';
 
-const HelloWorld = () => {
+import data from './TE-data.xlsx';
+
+const Main = () => {
     return (
-        <h1>
-            Hello world
-        </h1>
+        <div>
+            {App(data)} 
+        </div>
     );
 }
 
-ReactDOM.render(<HelloWorld />, document.getElementById("root"));
+ReactDOM.render(<Main />, document.getElementById("root"));
