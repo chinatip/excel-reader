@@ -10,7 +10,7 @@ export const XlsxOpener = (): JSX.Element => {
     const [sheetIndex, setSheetIndex] = useState(0);
     const [uploadedFile, setuploadedFile] = useState(null);
     
-    const handleChange = (event: any, value: any): void => {
+    const handleSheetChange = (event: any, value: any): void => {
         setSheetIndex(value);
     };
 
@@ -35,7 +35,7 @@ export const XlsxOpener = (): JSX.Element => {
 
         return (
             <>
-                <SheetSelector sheets={sheets} selectedSheet={sheetIndex} onChange={handleChange}/>
+                <SheetSelector sheets={sheets} selectedSheet={sheetIndex} onChange={handleSheetChange}/>
                 <SheetView sheet={sheets[sheetIndex]} />
             </>
         )
@@ -48,9 +48,11 @@ export const XlsxOpener = (): JSX.Element => {
     );
 
     return (
-        <>
-            {renderUploadFile()}
-            {renderTableView()}
-        </>
+        <div className="TableOpener__Container" style={{ position: 'relative' }}>
+            <div className="TableOpener__Wrapper" style={{ padding: '10px', display: 'flex', flexDirection: 'column' }}>
+                {renderUploadFile()}
+                {renderTableView()}
+            </div>
+        </div>
     );
 };

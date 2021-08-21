@@ -1,7 +1,6 @@
+import Button from '@material-ui/core/Button/Button';
 import React, { useState, useEffect } from 'react';
 import { Table } from '../models/Table';
-import { RowsToTextView } from './RowsToTextView';
-import { RowsToText } from './RowsToText';
 import { ColumnSelector, ColumnSelectorProps } from './ColumnSelector';
 
 interface Props {
@@ -21,17 +20,46 @@ export const SheetView = (props: Props): JSX.Element => {
         list: props.sheet.columns,
         selectedItems: selectedColumns,
         setSelectedItems: setSelectedColumns,
-    }
+    };
+
+    const copyToClipBoard = () => navigator.clipboard.writeText(getText());
+
+    const getText = (): string => {
+        if (!props || !props.sheet.rows || !props.sheet.columns) return null;
+        
+        const columns = selectedColumns ?? props.sheet.columns;
+        const renderRow = (row: any): string => {
+            let text = '';
+            const renderField = (field: string): string => !field ? '' : field + String.fromCharCode(13, 10);
+            columns.forEach(c => text += renderField(row[c]));
+    
+            return text + String.fromCharCode(13, 10);
+        };
+    
+
+        let text = '';
+        props.sheet.rows.forEach(r => text += renderRow(r));
+
+        return text;
+    };
+
+    const renderTextArea = () => (
+        <textarea
+            value={getText()}
+            style={{ width: '100%', height: '100%', minHeight: '500px' }}
+        />
+    );
+    
 
     return (
-        <div>
+        <>
             <ColumnSelector {...columnSelectorProps} />
-            <div style={{ margin: '20px', padding: '40px', border: '2px solid RED' }}>
-                <RowsToText rows={props.sheet.rows} columns={selectedColumns} />
+            <div style={{ textAlign: 'center', padding: '10px' }}>
+                <Button variant="contained" color="primary" size="large" onClick={copyToClipBoard}>Copy</Button>
             </div>
-            <div style={{ margin: '20px', padding: '40px', border: '2px solid black' }}>
-                <RowsToTextView rows={props.sheet.rows} columns={selectedColumns} />
+            <div style={{ margin: '10px', padding: '10px', border: '2px solid red' }}>
+                {renderTextArea()}
             </div>
-        </div>
+        </>
     )
 };
