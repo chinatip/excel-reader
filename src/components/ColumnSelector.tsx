@@ -11,10 +11,6 @@ export const ColumnSelector = (props: ColumnSelectorProps) => {
     if (!props || !props.list) return null;
     const { list, selectedItems, setSelectedItems } = props;
 
-    useEffect(() => {
-        setSelectedItems(props.list);
-    }, props.list)
-
     const handleSelectCol = (col: string) => () => {
         let updateCols: string[] = selectedItems ? [...selectedItems] : [];
         if (!selectedItems) {
@@ -36,7 +32,7 @@ export const ColumnSelector = (props: ColumnSelectorProps) => {
     const handleSelectAll = () => setSelectedItems(props.list);
     const handleSelectNone = () => setSelectedItems(null);
 
-    const renderCol = (col: string, i: number) => {
+    const renderCol = (col: string) => {
         const isSelected = selectedItems && selectedItems.includes(col);
         
         const chipVariant = isSelected ? 'outlined' : 'outlined';
@@ -55,7 +51,7 @@ export const ColumnSelector = (props: ColumnSelectorProps) => {
             <Chip label="Select All" color="primary" onClick={handleSelectAll} />&nbsp;
             <Chip label="Select None" color="secondary" onClick={handleSelectNone} />
             <br/><br/>
-            {list.map((c, i) => renderCol(c, i))}
+            {list.map(c => renderCol(c))}
         </div>
     );
 };
