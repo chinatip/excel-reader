@@ -1,7 +1,12 @@
 import React from 'react';
 
-export const Rows = (rows: any[], columns: string[]): JSX.Element => {
-    if (!rows || !columns) return null;
+interface RowsToTextViewProps {
+    rows: any[];
+    columns: string[];
+}
+
+export const RowsToTextView = (props: RowsToTextViewProps): JSX.Element => {
+    if (!props || !props.rows || !props.columns) return null;
 
     const renderRow = (row: any) => {
         const renderField = (field: string) => {
@@ -9,7 +14,7 @@ export const Rows = (rows: any[], columns: string[]): JSX.Element => {
 
             return <div dangerouslySetInnerHTML={{__html: field}} />
         };
-        const fields = (row: any) => columns.map(c => renderField(row[c]));
+        const fields = (row: any) => props.columns.map(c => renderField(row[c]));
 
         return (
             <>
@@ -19,7 +24,7 @@ export const Rows = (rows: any[], columns: string[]): JSX.Element => {
         )
     };
 
-    const renderRows = () => rows.map(r => renderRow(r));
+    const renderRows = () => props.rows.map(r => renderRow(r));
     
     return (
         <div>

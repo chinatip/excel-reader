@@ -1,13 +1,13 @@
+import Chip from '@material-ui/core/Chip/Chip';
 import React from 'react';
-import './Selector.css';
 
-export interface SelectorProps {
+export interface ColumnSelectorProps {
     list: string[];
     selectedItems: string[];
     setSelectedItems: (cols: string[]) => void;
 }
 
-export const Selector = (props: SelectorProps) => {
+export const ColumnSelector = (props: ColumnSelectorProps) => {
     if (!props || !props.list) return null;
     const { list, selectedItems, setSelectedItems } = props;
 
@@ -31,13 +31,10 @@ export const Selector = (props: SelectorProps) => {
 
     const renderCol = (col: string, i: number) => {
         const isSelected = selectedItems && selectedItems.includes(col);
-        const className = `SelectorContainer__Col 
-            ${isSelected ? 'SelectorContainer__Col--active' : ''}`;
-
-        return <div
-            key={i}
-            className={className}
-            onClick={handleSelectCol(col)}>{col}</div>
+        
+        const chipVariant = isSelected ? 'outlined' : 'outlined';
+        const chipColor = isSelected ? 'primary' : 'default';
+        return <Chip label={col} variant={chipVariant} color={chipColor} onClick={handleSelectCol(col)} />;
     };
 
     return (

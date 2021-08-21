@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table } from '../../models/Table';
-import { Rows } from './Rows';
-import { Selector, SelectorProps } from '../Selector/Selector';
+import { RowsToTextView } from './RowsToTextView';
+import { ColumnSelector, ColumnSelectorProps } from '../Selector/ColumnSelector';
 
 interface Props {
     sheet: Table
@@ -10,9 +10,9 @@ interface Props {
 export const SheetView = (props: Props): JSX.Element => {
     if (!props.sheet) return null;
 
-    const [selectedColumns, setSelectedColumns] = useState(null);
+    const [selectedColumns, setSelectedColumns] = useState(props.sheet.columns);
 
-    const columnSelectorProps: SelectorProps = {
+    const columnSelectorProps: ColumnSelectorProps = {
         list: props.sheet.columns,
         selectedItems: selectedColumns,
         setSelectedItems: setSelectedColumns,
@@ -20,8 +20,8 @@ export const SheetView = (props: Props): JSX.Element => {
 
     return (
         <div>
-            <Selector {...columnSelectorProps} />
-            {Rows(props.sheet.rows, selectedColumns ?? props.sheet.columns)}
+            <ColumnSelector {...columnSelectorProps} />
+            <RowsToTextView rows={props.sheet.rows} columns={selectedColumns} />
         </div>
     )
 };
