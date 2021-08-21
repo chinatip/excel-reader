@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app';
 
-import data from './TE-data.xlsx';
+import data from './wendy-data.xlsx';
 
 const Main = () => {
+    window.data = data;
     return (
         <div>
             {App(data)} 

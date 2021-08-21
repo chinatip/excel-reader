@@ -1,12 +1,23 @@
-import React from 'react';
-import { TableView } from './components/TableView/TableView';
-import { Table } from './models/Table';
-import { getSheets } from './services/TableReader';
-
+import React, { useState } from 'react';
 import { WorkSheet } from 'xlsx/types';
 
-export const App = (data: WorkSheet): JSX.Element => {
-    const sheets: Table[] = getSheets(data);
+import { Table } from './models/Table';
+import { SheetView } from './components/SheetView/SheetView';
+import { getSheets } from './services/SheetService';
+import { SheetSelector } from './components/SheetSelector/SheetSelector';
 
-    return TableView(sheets[0]);
+export const App = (data: WorkSheet): JSX.Element => {
+    const [sheetIndex, setSheetIndex] = useState(0);
+    
+    const sheets: Table[] = getSheets(data);
+    const handleChange = (event: any, value: any): void => {
+        setSheetIndex(value);
+    };
+
+    return (
+        <>
+            <SheetSelector sheets={sheets} selectedSheet={sheetIndex} onChange={handleChange}/>
+            <SheetView sheet={sheets[sheetIndex]} />
+        </>
+    );
 };
