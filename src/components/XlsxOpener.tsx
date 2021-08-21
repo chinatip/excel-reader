@@ -6,9 +6,9 @@ import { SheetSelector } from './SheetSelector';
 import { SheetView } from './SheetView';
 import * as XLSX from 'xlsx';
 
-export const XlsxOpener = (data: WorkSheet): JSX.Element => {
+export const XlsxOpener = (): JSX.Element => {
     const [sheetIndex, setSheetIndex] = useState(0);
-    const [uploadedFile, setuploadedFile] = useState(data);
+    const [uploadedFile, setuploadedFile] = useState(null);
     
     const handleChange = (event: any, value: any): void => {
         setSheetIndex(value);
@@ -39,11 +39,17 @@ export const XlsxOpener = (data: WorkSheet): JSX.Element => {
                 <SheetView sheet={sheets[sheetIndex]} />
             </>
         )
-    }
+    };
+
+    const renderUploadFile = () => (
+        <div style={{ textAlign: 'center', padding: '20px', border: '1px solid grey', marginBottom: '20px' }}>
+            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={handleUpdateFile} />
+        </div>
+    );
 
     return (
         <>
-            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={handleUpdateFile} />
+            {renderUploadFile()}
             {renderTableView()}
         </>
     );
