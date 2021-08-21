@@ -26,6 +26,9 @@ const getSheetData = (data: WorkSheet, name: any): Table => {
 };
 
 export const getSheets = (data: WorkSheet): Table[] => {
+    if (!data) return null;
+    
     const sheetNames = getSheetName(data);
-    return sheetNames.map(s => getSheetData(data, s));
+
+    return (sheetNames ?? []).map(s => getSheetData(data, s));
 };
