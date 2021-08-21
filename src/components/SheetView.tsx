@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Table } from '../../models/Table';
+import { Table } from '../models/Table';
 import { RowsToTextView } from './RowsToTextView';
-import { ColumnSelector, ColumnSelectorProps } from '../Selector/ColumnSelector';
+import { ColumnSelector, ColumnSelectorProps } from './ColumnSelector';
 
 interface Props {
     sheet: Table

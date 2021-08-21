@@ -1,5 +1,5 @@
 import Chip from '@material-ui/core/Chip/Chip';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export interface ColumnSelectorProps {
     list: string[];
@@ -10,6 +10,10 @@ export interface ColumnSelectorProps {
 export const ColumnSelector = (props: ColumnSelectorProps) => {
     if (!props || !props.list) return null;
     const { list, selectedItems, setSelectedItems } = props;
+
+    useEffect(() => {
+        setSelectedItems(props.list);
+    }, props.list)
 
     const handleSelectCol = (col: string) => () => {
         let updateCols: string[] = selectedItems ? [...selectedItems] : [];
@@ -29,16 +33,28 @@ export const ColumnSelector = (props: ColumnSelectorProps) => {
         setSelectedItems(updateCols);
     };
 
+    const handleSelectAll = () => setSelectedItems(props.list);
+    const handleSelectNone = () => setSelectedItems(null);
+
     const renderCol = (col: string, i: number) => {
         const isSelected = selectedItems && selectedItems.includes(col);
         
         const chipVariant = isSelected ? 'outlined' : 'outlined';
         const chipColor = isSelected ? 'primary' : 'default';
-        return <Chip label={col} variant={chipVariant} color={chipColor} onClick={handleSelectCol(col)} />;
+        return (
+            <>
+                <Chip label={col} variant={chipVariant} color={chipColor} onClick={handleSelectCol(col)} />
+                &nbsp;
+            </>
+        );
     };
 
     return (
-        <div className="SelectorContainer">
+        <div>
+            <br/>
+            <Chip label="Select All" color="primary" onClick={handleSelectAll} />&nbsp;
+            <Chip label="Select None" color="secondary" onClick={handleSelectNone} />
+            <br/><br/>
             {list.map((c, i) => renderCol(c, i))}
         </div>
     );

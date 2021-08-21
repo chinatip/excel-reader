@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { WorkSheet } from 'xlsx/types';
 
 import { Table } from './models/Table';
-import { SheetView } from './components/SheetView/SheetView';
+import { SheetView } from './components/SheetView';
 import { getSheets } from './services/SheetService';
-import { SheetSelector } from './components/SheetSelector/SheetSelector';
+import { SheetSelector } from './components/SheetSelector';
 
 export const App = (data: WorkSheet): JSX.Element => {
     const [sheetIndex, setSheetIndex] = useState(0);

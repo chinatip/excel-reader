@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
-import { Table } from '../../models/Table';
+import { Table } from '../models/Table';
 
 interface SheetSelectorProps {
     sheets: Table[];
